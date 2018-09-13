@@ -4,13 +4,17 @@ setwd(this.dir)
 source("leal_ex3.r") 
 
 Gaussian <- function(augCoeffMatrix){
-
   a = augCoeffMatrix$augcoeffmatrix
   n = length(augCoeffMatrix$variables)
-  print(a)
+  xvalues = NULL
+
   for (i in 1:(n-1)){
-    pivotRow = row(max(abs(a[i:n,i])))
-    
+    maxValue = (max(abs(a[i:n,i])))
+    pivotRow = findRow(maxValue,i,a)
+
+    a[pivotRow$index,]=a[i,]
+    a[i,]=pivotRow$row
+
     for (j in (i+1):n){
       pivotEl = a[i,i]
       multiplier = a[j,i]/pivotEl
@@ -18,20 +22,32 @@ Gaussian <- function(augCoeffMatrix){
       a[j,] = a[j,] - nr
     }
   }
+  b=a[,"RHS"]
+  x=NULL
+  x[i] = (b[i] - sum(a[i, i+1:n] * x[i+1:n])) / a[i,i]
   print(a)
+  print(x)
 }
 
-swap <- function(pivotRow,ai){
+swap <- function(a,pivotRow,ai){
   temp = ai
   ai = pivotRow
   pivotRow = temp
-  
 }
 
-E2 <- function (x1, x2, x3) 0.3 * x1 + -0.2 * x2 + 10 * x3 + -71.4;
-E1 <- function (x1, x2, x3) 3 * x1 + -0.2 * x3 + -0.1 * x2 + -7.85;
-E3 <- function (x1, x2, x3) 0.1 * x1 + 7 * x2 + -0.3 * x3 + 19.3;
-system <- list(E1, E2, E3);
+findRow <- function(maxValue, i, a){
+  n = nrow(a)
+  for (j in 1:n){
+    if (a[j,i]==maxValue){
+      print(a[j,])
+      return (list(index = j,row = a[j,]))
+    }
+  }
+}
+
+E1 <- function (x1, x2) 3 * x1 + 4 * x2 + -14;
+E2 <- function (x1, x2) 5 * x1 + -7 * x2 + -3;
+system <- list(E1, E2);
 result <- AugCoeffMatrix(system)
 
 Gaussian(result)
