@@ -45,22 +45,39 @@ getVariables <- function (system){
 
 #checks validity of the functions
 isValid <- function (system) {
+  numOfRows = length(deparse(system))-1
+  
   numOfTerms = deparse(system[[1]])[2];
   numOfTerms = strsplit(numOfTerms," + ",fixed = TRUE)
   numOfTerms = length(numOfTerms[[1]])
+  
+  #checks if system can generate a square matrix
+  if (numOfTerms-1 != numOfRows)
+    return (FALSE)
+
+  
+  temp_checkVar = deparse(system)[1]
   for (s in system){
-    temp = deparse(s)[2];
-    temp = strsplit(temp," + ",fixed = TRUE)
-    temp = length(temp[[1]])
-    if (temp != numOfTerms)
+    curr_checkVar = deparse(s)[1]
+    temp_checkNumOfVars = deparse(s)[2];
+    temp_checkNumOfVars = strsplit(temp_checkNumOfVars," + ",fixed = TRUE)
+    temp_checkNumOfVars = length(temp_checkNumOfVars[[1]])
+    #checks if variables in each equation are the same
+    if (temp_checkVar != curr_checkVar)
+      return (FALSE)
+    #checks if number of variables in function is equal to number of variables in equation
+    if (temp_checkNumOfVars != numOfTerms)
       return (FALSE)
   }
   return (TRUE)
 }
 
-#E1 <- function (x1, x2, x3) 0 * x1 + -0.2 * x2 + 10 * x3 + -71.4;
-#E2 <- function (x1, x2, x3) 3 * x1 + -0.2 * x3 + 0 * x2 + 0;
-#E3 <- function (x1, x2, x3) 0.1 * x1 + 0 * x2 + -0.3 * x3 + 19.3;
-#system <- list(E1, E2, E3);
-#result <- AugCoeffMatrix(system)
-#(result)
+E1 <- function (x1, x2, x8) 0 * x1 + -0.2 * x2 + 10 * x3 + -71.4;
+E2 <- function (x1, x2, x3) 3 * x1 + -0.2 * x3 + 0 * x2 + 0;
+E3 <- function (x1, x2, x3) 0.1 * x1 + 0 * x2 + -0.3 * x3 + 19.3;
+system <- list(E1, E2, E3);
+
+result <- AugCoeffMatrix(system)
+
+print
+print(result)
