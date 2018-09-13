@@ -50,7 +50,8 @@ findRow <- function(maxValue, i, a){
 GaussJordan <- function(augCoeffMatrix){
   a = augCoeffMatrix$augcoeffmatrix
   n = length(augCoeffMatrix$variables)
-  for (i in 1:(n-1)){
+
+  for (i in 1:n){
     if (i!=n){
       maxValue = (max(abs(a[i:n,i])))
       pivotRow = findRow(maxValue,i,a)
@@ -59,14 +60,14 @@ GaussJordan <- function(augCoeffMatrix){
       a[i,]=pivotRow$row
     }
     a[i,] = a[i,]/a[i,i]
-    for (j in i:n){
+    for (j in 1:n){
+      print(j)
       if (i==j){
         next
       }
       nr = a[j,i]*a[i,]
-      a[j,]:a[j,] - nr
+      a[j,]= a[j,] - nr
     }
-    print(a)
     
     b=a[,"RHS"]
     x=NULL
@@ -74,14 +75,15 @@ GaussJordan <- function(augCoeffMatrix){
     for (i in n:1){
       x[i] = (b[i] - sum(a[i, (i+1):n] * x[(i+1):n])) / a[i,i]
     }
-    print(a)
-    print(x)
   }
+  print(a)
+  print(x)
 }
 
-E1 <- function (x1, x2) 3 * x1 + 4 * x2 + -14;
-E2 <- function (x1, x2) 5 * x1 + -7 * x2 + -3;
-system <- list(E1, E2);
+E1 <- function (x1, x2, x3) 144 * x1 + 12 * x2 + 1 * x3 + -279.2;
+E2 <- function (x1, x2, x3) 64 * x1 + 8 * x2 + 1 * x3 + -177.2;
+E3 <- function (x1, x2, x3) 25 * x1 + 5 * x2 + 1 * x3 + -3;
+system <- list(E2, E1, E3);
 result <- AugCoeffMatrix(system)
 
 #Gaussian(result)
