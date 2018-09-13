@@ -24,7 +24,10 @@ Gaussian <- function(augCoeffMatrix){
   }
   b=a[,"RHS"]
   x=NULL
-  x[i] = (b[i] - sum(a[i, i+1:n] * x[i+1:n])) / a[i,i]
+  print(a)
+  for (i in n:1){
+    x[i] = (b[i] - sum(a[i, (i+1):n] * x[(i+1):n])) / a[i,i]
+  }
   print(a)
   print(x)
 }
