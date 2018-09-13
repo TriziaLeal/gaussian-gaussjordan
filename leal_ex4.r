@@ -42,7 +42,7 @@ Gaussian <- function(augCoeffMatrix){
     }
   }
   x = backwardElimination(a)
-  return (list(solutionSet = x, augCoeffMatrix = augCoeffMatrix$augcoeffmatrix, variables = augCoeffMatrix$variables ))
+  return (list(solutionSet = x, matrix = a, variables = augCoeffMatrix$variables ))
 }
 
 GaussJordan <- function(augCoeffMatrix){
@@ -67,12 +67,12 @@ GaussJordan <- function(augCoeffMatrix){
     }
   }
   x = backwardElimination(a)
-  return (list(solutionSet = x, augCoeffMatrix = augCoeffMatrix$augcoeffmatrix, variables = augCoeffMatrix$variables ))
+  return (list(solutionSet = x, matrix = a, variables = augCoeffMatrix$variables ))
 }
 
-E1 <- function (x1, x2, x3) 144 * x1 + 12 * x2 + 1 * x3 + -279.2;
-E2 <- function (x1, x2, x3) 64 * x1 + 8 * x2 + 1 * x3 + -177.2;
-E3 <- function (x1, x2, x3) 25 * x1 + 5 * x2 + 1 * x3 + -106.8;
+E1 <- function (x1, x2, x3) 0.3 * x1 + -0.2 * x2 + 10 * x3 + -71.4;
+E2 <- function (x1, x2, x3) 3 * x1 + -0.1 * x2 + -0.2 * x3 + -7.85;
+E3 <- function (x1, x2, x3) 0.1 * x1 + 7 * x2 + -0.3 * x3 + 19.3;
 system <- list(E2, E3, E1);
 result <- AugCoeffMatrix(system)
 
